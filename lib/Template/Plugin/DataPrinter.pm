@@ -1,11 +1,13 @@
 package Template::Plugin::DataPrinter;
 use strict;
 use warnings;
+use base 'Template::Plugin';
 
 # ABSTRACT: Template Toolkit dumper plugin for Data::Printer
 # VERSION
 
 use HTML::FromANSI::Tiny;
+use Hash::Merge::Simple qw< merge >;
 
 sub new {
     my ($class, $context, $params) = @_;
@@ -13,7 +15,10 @@ sub new {
     require Data::Printer;
     my $dp_params = _make_params($params, dp =>
         {
-
+            colored => 1,
+            color   => {
+                array => 'black',
+            },
         });
     Data::Printer->import(%$dp_params);
 
@@ -36,10 +41,10 @@ sub _make_params {
     # 2. if $params->{+$key} is supplied this is merged over the top
     my ($params, $key, $defaults) = @_;
 
-    return {
-        %{ $params->{$key}       || $defaults }, # supplied base or defaults
-        %{ $params->{'+' . $key} || {}        }, # supplied overrides
-    };
+    my $base      = $params->{$key} || $defaults;
+    my $overrides = $params->{'+' . $key} || {};
+
+    return merge($base, $overrides);
 }
 
 1;
