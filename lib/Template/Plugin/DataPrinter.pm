@@ -55,7 +55,7 @@ sub dump_html {
 
     my $html = $self->_css;
     my $text = $self->dump(@_);
-    $html .= '<pre>' . $self->{hfat}->html($text) . '</pre>';
+    $html .= "<pre>\n" . $self->{hfat}->html($text) . "\n</pre>";
     return $html;
 }
 
@@ -65,7 +65,7 @@ sub _css {
     return '' if $self->{done_css};
 
     $self->{done_css} = 1;
-    return $self->{hfat}->style_tag;
+    return $self->{hfat}->style_tag . "\n";
 }
 
 1;
