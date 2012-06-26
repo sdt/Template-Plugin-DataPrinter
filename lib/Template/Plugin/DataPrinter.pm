@@ -32,7 +32,24 @@ sub new {
         _CONTEXT => $context,
         hfat => HTML::FromANSI::Tiny->new(%$hfat_params),
     }, $class;
+}
 
+sub dump {
+    my $self = shift;
+    my $text = p(@_);
+    return $text;
+}
+
+sub dump_html {
+    my $self = shift;
+    my $html;
+    if (!$self->{done_css}) {
+        $self->{done_css} = 1;
+        $html = $self->{hfat}->style_tag;
+    }
+    my $text = p(@_);
+    $html .= '<pre>' . $self->{hfat}->html($text) . '</pre>';
+    return $html;
 }
 
 sub _make_params {
