@@ -19,6 +19,7 @@ sub new {
             color   => {
                 array => 'black',
             },
+            use_prototypes => 0,
         });
     Data::Printer->import(%$dp_params);
 
@@ -27,16 +28,24 @@ sub new {
             auto_reverse => 1,
             background => 'white',
             foreground => 'black',
+            class_prefix => 'tpdp_',
         });
+    my $hfat = HTML::FromANSI::Tiny->new(%$hfat_params);
+
     my $self = bless {
         _CONTEXT => $context,
-        hfat => HTML::FromANSI::Tiny->new(%$hfat_params),
+        hfat => $hfat,
     }, $class;
+
+    return $self;
 }
 
 sub dump {
     my $self = shift;
-    my $text = p(@_);
+
+    # p(@_) only seems to print out the first element
+    my $text = join("\n", map { p($_) } @_);
+
     return $text;
 }
 
@@ -47,7 +56,8 @@ sub dump_html {
         $self->{done_css} = 1;
         $html = $self->{hfat}->style_tag;
     }
-    my $text = p(@_);
+
+    my $text = $self->dump(@_);
     $html .= '<pre>' . $self->{hfat}->html($text) . '</pre>';
     return $html;
 }
