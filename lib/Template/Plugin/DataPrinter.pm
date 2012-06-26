@@ -13,25 +13,26 @@ sub new {
     my ($class, $context, $params) = @_;
 
     require Data::Printer;
-    my $dp_params = _make_params($params, dp =>
-        {
+    my $dp_params = merge( {
             colored => 1,
             color   => {
                 array => 'black',
             },
             use_prototypes => 0,
-        });
+        },
+        $params->{dp});
     Data::Printer->import(%$dp_params);
 
-    my $hfat_params = _make_params($params, hfat =>
-        {
+    my $hfat_params = merge( {
             auto_reverse => 1,
             background => 'white',
             foreground => 'black',
             class_prefix => 'tpdp_',
-        });
-    my $hfat = HTML::FromANSI::Tiny->new(%$hfat_params);
+            no_plain_tags => 1,
+        },
+        $params->{hfat});
 
+    my $hfat = HTML::FromANSI::Tiny->new(%$hfat_params);
     my $self = bless {
         _CONTEXT => $context,
         hfat => $hfat,
@@ -51,27 +52,20 @@ sub dump {
 
 sub dump_html {
     my $self = shift;
-    my $html;
-    if (!$self->{done_css}) {
-        $self->{done_css} = 1;
-        $html = $self->{hfat}->style_tag;
-    }
 
+    my $html = $self->_css;
     my $text = $self->dump(@_);
     $html .= '<pre>' . $self->{hfat}->html($text) . '</pre>';
     return $html;
 }
 
-sub _make_params {
-    # Params are taken in this order:
-    # 1. if $params->{$key} is supplied, use that, otherwise $defaults
-    # 2. if $params->{+$key} is supplied this is merged over the top
-    my ($params, $key, $defaults) = @_;
+sub _css {
+    # Short of a better plan, emit the css on-demand before the first dump_html
+    my $self = shift;
+    return '' if $self->{done_css};
 
-    my $base      = $params->{$key} || $defaults;
-    my $overrides = $params->{'+' . $key} || {};
-
-    return merge($base, $overrides);
+    $self->{done_css} = 1;
+    return $self->{hfat}->style_tag;
 }
 
 1;
