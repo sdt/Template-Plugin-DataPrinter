@@ -4,7 +4,7 @@ use Test::Most;
 use Template::Plugin::DataPrinter;
 
 my $base    = { a => 1, b => 2, c => [ 1 .. 3 ]                    };
-my $default = {         b => 3, c => 4                             };
+my $default = {         b => 3, c => 4,          d => { a => 'a' } };
 my $extra   = {         b => 4,                  d => { d => 'd' } };
 
 # Test the parameter hash merging logic
@@ -15,7 +15,7 @@ eq_or_diff(
         },
         test => $default
     ),
-    { b => 3, c => 4 },
+    { b => 3, c => 4, d => { a => 'a' } },
     'default no overrides'
 );
 
@@ -26,7 +26,7 @@ eq_or_diff(
         },
         test => $default
     ),
-    { b => 4, c => 4, d => { d => 'd' } },
+    { b => 4, c => 4, d => { a => 'a', d => 'd' } },
     'default with overrides'
 );
 
