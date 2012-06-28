@@ -28,6 +28,7 @@ my %stash = (
 
 {
     note 'Testing dump';
+
     my $template = "[%
         $template_header
         DataPrinter.dump(string, number);
@@ -48,6 +49,7 @@ my %stash = (
 
 {
     note 'Testing dump_html';
+
     my $template = "[%
         $template_header
         DataPrinter.dump_html(string, number);
@@ -64,6 +66,28 @@ my %stash = (
     like($html, qr/test_cyan.*$estash{number}/s, 'output contains cyan number');
     like($html, qr/$estash{string}.*$estash{number}/s,
         'output contains string in number in correct order');
+}
+
+{
+    note 'Testing Dumper dropin replacement operation';
+
+    my $template = '[%
+        USE Dumper;
+        Dumper.dump(string, number);
+        Dumper.dump_html(string, number);
+    %]';
+
+    my $tt = Template->new(PLUGINS => {
+        Dumper => 'Template::Plugin::DataPrinter'
+    });
+    my $out1 = process_ok($template, \%stash,
+        'Dumper template processed ok', $tt);
+
+    $template =~ s/Dumper/DataPrinter/g;
+    my $out2 = process_ok($template, \%stash,
+        'DataPrinter template processed ok', $tt);
+
+    is($out1, $out2, 'Dumper alias works');
 }
 
 Test::NoWarnings::had_no_warnings();

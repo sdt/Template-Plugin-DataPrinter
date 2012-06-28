@@ -11,9 +11,9 @@ our @EXPORT = qw< process_ok match_count_is >;
 use Template;
 
 sub process_ok {
-    my ($template, $stash, $name) = @_;
+    my ($template, $stash, $name, $tt) = @_;
 
-    my $tt = Template->new;
+    $tt ||= Template->new;
     my $out;
 
     my $ok = $tt->process(\$template, $stash, \$out);
