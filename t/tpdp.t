@@ -6,6 +6,7 @@ use Template::Plugin::DataPrinter::TestUtils;
 use Test::More;
 require Test::NoWarnings;
 
+use HTML::Entities  qw< encode_entities >;
 use Term::ANSIColor qw< color >;
 
 delete $ENV{DATAPRINTERRC}; # make sure user rc doesn't interfere
@@ -21,7 +22,7 @@ USE DataPrinter(
 EOT
 
 my %stash = (
-    string => 'a string',
+    string => 'a <div> string', # include html tag to make sure it gets escaped
     number => 1234,
 );
 
@@ -57,9 +58,11 @@ my %stash = (
 
     match_count_is($html, qr/<style/, 1, 'css is output only once');
 
-    like($html, qr/test_blue.*$stash{string}/s, 'output contains blue string');
-    like($html, qr/test_cyan.*$stash{number}/s, 'output contains cyan number');
-    like($html, qr/$stash{string}.*$stash{number}/s,
+    my %estash = map { $_ => encode_entities($stash{$_}) } keys %stash;
+
+    like($html, qr/test_blue.*$estash{string}/s, 'output contains blue string');
+    like($html, qr/test_cyan.*$estash{number}/s, 'output contains cyan number');
+    like($html, qr/$estash{string}.*$estash{number}/s,
         'output contains string in number in correct order');
 }
 
