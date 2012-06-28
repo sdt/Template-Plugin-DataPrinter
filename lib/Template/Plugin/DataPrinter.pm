@@ -45,7 +45,7 @@ sub dump {
     my $self = shift;
 
     # p(@_) only seems to print out the first element
-    my $text = join("\n", map { p($_) } @_);
+    my $text = join('', map { p($_) . "\n" } @_);
 
     return $text;
 }
@@ -55,7 +55,7 @@ sub dump_html {
 
     my $html = $self->_css;
     my $text = $self->dump(@_);
-    $html .= "<pre>\n" . $self->{hfat}->html($text) . "\n</pre>";
+    $html .= "<pre>\n" . $self->{hfat}->html($text) . '</pre>';
     return $html;
 }
 
