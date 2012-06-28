@@ -3,7 +3,7 @@ use strict;
 use warnings;
 use base 'Template::Plugin';
 
-# ABSTRACT: Template Toolkit dumper plugin for Data::Printer
+# ABSTRACT: Template Toolkit dumper plugin using Data::Printer
 # VERSION
 
 use HTML::FromANSI::Tiny ();
@@ -69,3 +69,56 @@ sub _css {
 }
 
 1;
+
+__END__
+
+=pod
+
+=head1 SYNOPSIS
+
+    [% USE DataPrinter %]
+
+    [% DataPrinter.dump(variable) %]
+    [% DataPrinter.dump_html(variable) %]
+
+=head1 DESCRIPTION
+
+This is a dumper plugin for L<Template::Toolkit> which uses L<Data::Printer>
+instead of L<Data::Dumper>.
+
+TODO: mention why - colorisation and the nice object output
+
+=head1 METHODS
+
+=head2 dump
+
+Generates an ansi-colorized dump of the data structures passed.
+
+    [% USE Dumper %]
+    [% Dumper.dump(myvar) %]
+    [% Dumper.dump(myvar, yourvar) %]
+
+=head2 dump_html
+
+Generates a html-formatted dump of the data structures passed. The html is
+generated from the raw ansi-colorized text by L<HTML::FromANSI::Tiny>.
+
+    [% USE Dumper %]
+    [% Dumper.dump_html(myvar) %]
+    [% Dumper.dump_html(myvar, yourvar) %]
+
+=head1 CONFIGURATION
+
+    [% USE Dumper(dp = { ... }, hfat => { ... }) %]
+
+TODO:
+
+=head2 Disabling colorization
+
+TODO:
+
+=head2 Using as a drop-in replacement for Template::Plugin::Dumper
+
+TODO:
+
+=cut
