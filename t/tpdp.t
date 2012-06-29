@@ -71,33 +71,21 @@ my %stash = (
 {
     note 'Testing Dumper dropin replacement operation';
 
-    my $template = '[%
+    my $template0 = '[%
         USE Dumper;
         Dumper.dump(string, number);
         Dumper.dump_html(string, number);
     %]';
 
+    my $template1 = $template0;
+    $template1 =~ s/Dumper/DataPrinter/g;
+
     my $tt = Template->new(PLUGINS => {
         Dumper => 'Template::Plugin::DataPrinter'
     });
-    my $out1 = process_ok($template, \%stash,
-        'Dumper template processed ok', $tt);
 
-    $template =~ s/Dumper/DataPrinter/g;
-    my $out2 = process_ok($template, \%stash,
-        'DataPrinter template processed ok', $tt);
-
-    is($out1, $out2, 'Dumper alias works');
-
-    $template = '[%
-        USE dp = DataPrinter;
-        dp.dump(string, number);
-        dp.dump_html(string, number);
-    %]';
-    my $out3 = process_ok($template, \%stash,
-        'Aliased template processed ok', $tt);
-
-    is($out1, $out3, 'Alias DataPrinter works');
+    templates_match($template0, $template1, \%stash,
+        'Dumper alias works', $tt);
 }
 
 Test::NoWarnings::had_no_warnings();

@@ -6,7 +6,7 @@ use Test::Builder;
 use base qw< Exporter >;
 
 my $TB = Test::Builder->new;
-our @EXPORT = qw< process_ok match_count_is >;
+our @EXPORT = qw< process_ok templates_match match_count_is >;
 
 use Template;
 
@@ -21,6 +21,15 @@ sub process_ok {
     $TB->ok($ok, $name);
 
     return $out;
+}
+
+sub templates_match {
+    my ($template0, $template1, $stash, $name, $tt) = @_;
+
+    my $out0 = process_ok($template0, $stash, '(template 0) ' .$name, $tt);
+    my $out1 = process_ok($template1, $stash, '(template 1) ' .$name, $tt);
+
+    $TB->is_eq($out0, $out1, $name);
 }
 
 sub match_count_is {
