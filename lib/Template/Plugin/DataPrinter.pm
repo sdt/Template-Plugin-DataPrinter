@@ -86,39 +86,68 @@ __END__
 This is a dumper plugin for L<Template::Toolkit> which uses L<Data::Printer>
 instead of L<Data::Dumper>.
 
-TODO: mention why - colorisation and the nice object output
+L<Data::Printer> is a colorised pretty-printer with nicely human-readable object
+output.
 
 =head1 METHODS
 
+The provided methods match those of L<Template::Plugin::Dumper>.
+
 =head2 dump
 
-Generates an ansi-colorized dump of the data structures passed.
+Generates an ansi-colorised dump of the data structures passed.
 
-    [% USE Dumper %]
-    [% Dumper.dump(myvar) %]
-    [% Dumper.dump(myvar, yourvar) %]
+    [% USE DataPrinter %]
+    [% DataPrinter.dump(myvar) %]
+    [% DataPrinter.dump(myvar, yourvar) %]
 
 =head2 dump_html
 
 Generates a html-formatted dump of the data structures passed. The html is
-generated from the raw ansi-colorized text by L<HTML::FromANSI::Tiny>.
+generated from the raw ansi-colorised text by L<HTML::FromANSI::Tiny>.
 
-    [% USE Dumper %]
-    [% Dumper.dump_html(myvar) %]
-    [% Dumper.dump_html(myvar, yourvar) %]
+    [% USE DataPrinter %]
+    [% DataPrinter.dump_html(myvar) %]
+    [% DataPrinter.dump_html(myvar, yourvar) %]
 
 =head1 CONFIGURATION
 
-    [% USE Dumper(dp = { ... }, hfat => { ... }) %]
+This plugin has no configuration of its own, but the underlying L<Data::Printer>
+and L<HTML::FromANSI::Tiny> modules can be configured using the C<dp> and
+L<hfat> parameters.
 
-TODO:
+    [% USE DataPrinter(dp = { ... }, hfat = { ... }) %]
 
-=head2 Disabling colorization
+=head2 Disabling colorisation
 
-TODO:
+Colorization is turned on by default. To turn it off, use L<Data::Printer>'s
+C<colored> parameter:
+
+    [% USE DataPrinter(dp = { colored = 0 }) %]
 
 =head2 Using as a drop-in replacement for Template::Plugin::Dumper
 
-TODO:
+This module can be used more-or-less as a drop-in replacement for the default
+Dumper plugin by specifying an explicit plugin mapping to the C<Template>
+constructor:
+
+    my $template = Template->new(...,
+            PLUGINS => {
+                Dumper => 'Template::Plugin::DataPrinter',
+            },
+        );
+
+
+Then templates such as this will automatically use the C<DataPrinter> plugin
+instead.
+
+    [% USE Dumper(Indent=0, Pad="<br>") %]
+
+    [% Dumper.dump(variable) %]
+    [% Dumper.dump_html(variable) %]
+
+Any constructor parameters not recognised by the C<DataPrinter> plugin will
+be silently ignored, so the C<Indent> and C<Pad> parameters above will have no
+effect.
 
 =cut
