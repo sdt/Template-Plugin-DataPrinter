@@ -46,9 +46,23 @@ generated from the raw ansi-colorised text by [HTML::FromANSI::Tiny](http://sear
 
 This plugin has no configuration of its own, but the underlying [Data::Printer](http://search.cpan.org/perldoc?Data::Printer)
 and [HTML::FromANSI::Tiny](http://search.cpan.org/perldoc?HTML::FromANSI::Tiny) modules can be configured using the `dp` and
-[hfat](http://search.cpan.org/perldoc?hfat) parameters.
+`hfat` parameters.
 
     [% USE DataPrinter(dp = { ... }, hfat = { ... }) %]
+
+- dp
+
+A hashref containing the params to be passed to [Data::Printer](http://search.cpan.org/perldoc?Data::Printer)s `import`
+function.
+
+See the [Data::Printer](http://search.cpan.org/perldoc?Data::Printer) documentation for more information.
+
+- hfat
+
+A hashref containing the params to be passed to the [HTML::FromANSI::Tiny](http://search.cpan.org/perldoc?HTML::FromANSI::Tiny)
+constructor.
+
+See the [HTML::FromANSI::Tiny](http://search.cpan.org/perldoc?HTML::FromANSI::Tiny) documentation for more information.
 
 ## Disabling colorisation
 
@@ -69,8 +83,8 @@ constructor:
             },
         );
 
-Then templates such as this will automatically use the `DataPrinter` plugin
-instead.
+Then existing templates such as the one below will automatically use the
+`DataPrinter` plugin instead.
 
     [% USE Dumper(Indent=0, Pad="<br>") %]
 
