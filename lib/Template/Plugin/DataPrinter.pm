@@ -15,19 +15,12 @@ sub new {
     require Data::Printer;
     my $dp_params = merge( {
             colored => 1,
-            color   => {
-                array => 'black',
-            },
-            use_prototypes => 0,
         },
         $params->{dp});
     Data::Printer->import(%$dp_params);
 
     my $hfat_params = merge( {
-            auto_reverse => 1,
-            background => 'white',
-            foreground => 'black',
-            class_prefix => 'tpdp_',
+            class_prefix  => 'ansi_',
             no_plain_tags => 1,
         },
         $params->{hfat});
@@ -43,10 +36,7 @@ sub new {
 
 sub dump {
     my $self = shift;
-
-    # p(@_) only seems to print out the first element
-    my $text = join('', map { p($_) . "\n" } @_);
-
+    my $text = join('', map { Data::Printer::np($_) . "\n" } @_);
     return $text;
 }
 
