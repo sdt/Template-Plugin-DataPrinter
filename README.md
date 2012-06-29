@@ -18,40 +18,68 @@ version 0.001
 This is a dumper plugin for [Template::Toolkit](http://search.cpan.org/perldoc?Template::Toolkit) which uses [Data::Printer](http://search.cpan.org/perldoc?Data::Printer)
 instead of [Data::Dumper](http://search.cpan.org/perldoc?Data::Dumper).
 
-TODO: mention why - colorisation and the nice object output
+[Data::Printer](http://search.cpan.org/perldoc?Data::Printer) is a colorised pretty-printer with nicely human-readable object
+output.
 
 # METHODS
 
+The provided methods match those of [Template::Plugin::Dumper](http://search.cpan.org/perldoc?Template::Plugin::Dumper).
+
 ## dump
 
-Generates an ansi-colorized dump of the data structures passed.
+Generates an ansi-colorised dump of the data structures passed.
 
-    [% USE Dumper %]
-    [% Dumper.dump(myvar) %]
-    [% Dumper.dump(myvar, yourvar) %]
+    [% USE DataPrinter %]
+    [% DataPrinter.dump(myvar) %]
+    [% DataPrinter.dump(myvar, yourvar) %]
 
 ## dump\_html
 
 Generates a html-formatted dump of the data structures passed. The html is
-generated from the raw ansi-colorized text by [HTML::FromANSI::Tiny](http://search.cpan.org/perldoc?HTML::FromANSI::Tiny).
+generated from the raw ansi-colorised text by [HTML::FromANSI::Tiny](http://search.cpan.org/perldoc?HTML::FromANSI::Tiny).
 
-    [% USE Dumper %]
-    [% Dumper.dump_html(myvar) %]
-    [% Dumper.dump_html(myvar, yourvar) %]
+    [% USE DataPrinter %]
+    [% DataPrinter.dump_html(myvar) %]
+    [% DataPrinter.dump_html(myvar, yourvar) %]
 
 # CONFIGURATION
 
-    [% USE Dumper(dp = { ... }, hfat => { ... }) %]
+This plugin has no configuration of its own, but the underlying [Data::Printer](http://search.cpan.org/perldoc?Data::Printer)
+and [HTML::FromANSI::Tiny](http://search.cpan.org/perldoc?HTML::FromANSI::Tiny) modules can be configured using the `dp` and
+[hfat](http://search.cpan.org/perldoc?hfat) parameters.
 
-TODO:
+    [% USE DataPrinter(dp = { ... }, hfat = { ... }) %]
 
-## Disabling colorization
+## Disabling colorisation
 
-TODO:
+Colorization is turned on by default. To turn it off, use [Data::Printer](http://search.cpan.org/perldoc?Data::Printer)'s
+`colored` parameter:
+
+    [% USE DataPrinter(dp = { colored = 0 }) %]
 
 ## Using as a drop-in replacement for Template::Plugin::Dumper
 
-TODO:
+This module can be used more-or-less as a drop-in replacement for the default
+Dumper plugin by specifying an explicit plugin mapping to the `Template`
+constructor:
+
+    my $template = Template->new(...,
+            PLUGINS => {
+                Dumper => 'Template::Plugin::DataPrinter',
+            },
+        );
+
+Then templates such as this will automatically use the `DataPrinter` plugin
+instead.
+
+    [% USE Dumper(Indent=0, Pad="<br>") %]
+
+    [% Dumper.dump(variable) %]
+    [% Dumper.dump_html(variable) %]
+
+Any constructor parameters not recognised by the `DataPrinter` plugin will
+be silently ignored, so the `Indent` and `Pad` parameters above will have no
+effect.
 
 # AUTHOR
 
