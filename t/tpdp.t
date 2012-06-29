@@ -88,6 +88,16 @@ my %stash = (
         'DataPrinter template processed ok', $tt);
 
     is($out1, $out2, 'Dumper alias works');
+
+    $template = '[%
+        USE dp = DataPrinter;
+        dp.dump(string, number);
+        dp.dump_html(string, number);
+    %]';
+    my $out3 = process_ok($template, \%stash,
+        'Aliased template processed ok', $tt);
+
+    is($out1, $out3, 'Alias DataPrinter works');
 }
 
 Test::NoWarnings::had_no_warnings();
