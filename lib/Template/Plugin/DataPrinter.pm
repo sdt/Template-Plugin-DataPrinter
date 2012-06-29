@@ -72,8 +72,6 @@ sub _css {
 
 __END__
 
-=pod
-
 =head1 SYNOPSIS
 
     [% USE DataPrinter %]
@@ -114,9 +112,27 @@ generated from the raw ansi-colorised text by L<HTML::FromANSI::Tiny>.
 
 This plugin has no configuration of its own, but the underlying L<Data::Printer>
 and L<HTML::FromANSI::Tiny> modules can be configured using the C<dp> and
-L<hfat> parameters.
+C<hfat> parameters.
 
     [% USE DataPrinter(dp = { ... }, hfat = { ... }) %]
+
+=over
+
+=item dp
+
+A hashref containing the params to be passed to L<Data::Printer>s C<import>
+function.
+
+See the L<Data::Printer> documentation for more information.
+
+=item hfat
+
+A hashref containing the params to be passed to the L<HTML::FromANSI::Tiny>
+constructor.
+
+See the L<HTML::FromANSI::Tiny> documentation for more information.
+
+=back
 
 =head2 Disabling colorisation
 
@@ -138,8 +154,8 @@ constructor:
         );
 
 
-Then templates such as this will automatically use the C<DataPrinter> plugin
-instead.
+Then existing templates such as the one below will automatically use the
+C<DataPrinter> plugin instead.
 
     [% USE Dumper(Indent=0, Pad="<br>") %]
 
