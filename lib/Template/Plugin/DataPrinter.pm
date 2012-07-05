@@ -173,8 +173,14 @@ The C<colored = 0> setting must appear in the C<USE DataPrinter> line.
 
 =head1 SEE ALSO
 
-L<Template::Toolkit|Template::Toolkit>
-L<Data::Printer|Data::Printer>
-L<HTML::FromANSI::Tiny|HTML::FromANSI::Tiny>
+=over
+
+=item * L<Template::Toolkit|Template::Toolkit>
+
+=item * L<Data::Printer|Data::Printer>
+
+=item * L<HTML::FromANSI::Tiny|HTML::FromANSI::Tiny>
+
+=back
 
 =cut

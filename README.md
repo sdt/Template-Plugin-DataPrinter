@@ -113,9 +113,9 @@ The `colored = 0` setting must appear in the `USE DataPrinter` line.
 
 # SEE ALSO
 
-[Template::Toolkit](http://search.cpan.org/perldoc?Template::Toolkit)
-[Data::Printer](http://search.cpan.org/perldoc?Data::Printer)
-[HTML::FromANSI::Tiny](http://search.cpan.org/perldoc?HTML::FromANSI::Tiny)
+- [Template::Toolkit](http://search.cpan.org/perldoc?Template::Toolkit)
+- [Data::Printer](http://search.cpan.org/perldoc?Data::Printer)
+- [HTML::FromANSI::Tiny](http://search.cpan.org/perldoc?HTML::FromANSI::Tiny)
 
 # AUTHOR
 
