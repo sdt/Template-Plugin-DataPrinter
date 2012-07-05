@@ -71,15 +71,16 @@ __END__
 
 =head1 DESCRIPTION
 
-This is a dumper plugin for L<Template::Toolkit> which uses L<Data::Printer>
-instead of L<Data::Dumper>.
+This is a dumper plugin for L<Template::Toolkit|Template::Toolkit> which uses
+L<Data::Printer|Data::Printer> instead of L<Data::Dumper|Data::Dumper>.
 
-L<Data::Printer> is a colorised pretty-printer with nicely human-readable object
-output.
+L<Data::Printer|Data::Printer> is a colorised pretty-printer with nicely
+human-readable object output.
 
 =head1 METHODS
 
-The provided methods match those of L<Template::Plugin::Dumper>.
+The provided methods match those of
+L<Template::Plugin::Dumper|Template::Plugin::Dumper>.
 
 =head2 dump
 
@@ -91,8 +92,9 @@ Generates an ansi-colorised dump of the data structures passed.
 
 =head2 dump_html
 
-Generates a html-formatted dump of the data structures passed. The html is
-generated from the raw ansi-colorised text by L<HTML::FromANSI::Tiny>.
+Generates a html-formatted dump of the data structures passed. The ansi
+colorisation is converted to html by
+L<HTML::FromANSI::Tiny|HTML::FromANSI::Tiny>.
 
     [% USE DataPrinter %]
     [% DataPrinter.dump_html(myvar) %]
@@ -100,9 +102,9 @@ generated from the raw ansi-colorised text by L<HTML::FromANSI::Tiny>.
 
 =head1 CONFIGURATION
 
-This plugin has no configuration of its own, but the underlying L<Data::Printer>
-and L<HTML::FromANSI::Tiny> modules can be configured using the C<dp> and
-C<hfat> parameters.
+This plugin has no configuration of its own, but the underlying
+L<Data::Printer|Data::Printer> and L<HTML::FromANSI::Tiny|HTML::FromANSI::Tiny>
+modules can be configured using the C<dp> and C<hfat> parameters.
 
     [% USE DataPrinter(dp = { ... }, hfat = { ... }) %]
 
@@ -110,24 +112,23 @@ C<hfat> parameters.
 
 =item dp
 
-A hashref containing the params to be passed to L<Data::Printer>s C<import>
-function.
+A hashref containing the params to be passed to C<Data::Printer::import>.
 
-See the L<Data::Printer> documentation for more information.
+See the L<Data::Printer|Data::Printer> documentation for more information.
 
 =item hfat
 
-A hashref containing the params to be passed to the L<HTML::FromANSI::Tiny>
-constructor.
+A hashref containing the params to be passed to C<HTML::FromANSI::Tiny->new>.
 
-See the L<HTML::FromANSI::Tiny> documentation for more information.
+See the L<HTML::FromANSI::Tiny|HTML::FromANSI::Tiny> documentation for more
+information.
 
 =back
 
 =head2 Disabling colorisation
 
-Colorization is turned on by default. To turn it off, use L<Data::Printer>'s
-C<colored> parameter:
+Colorization is turned on by default. To turn it off, use
+L<Data::Printer|Data::Printer>'s C<colored> parameter:
 
     [% USE DataPrinter(dp = { colored = 0 }) %]
 
@@ -143,7 +144,6 @@ constructor:
             },
         );
 
-
 Then existing templates such as the one below will automatically use the
 C<DataPrinter> plugin instead.
 
@@ -152,8 +152,29 @@ C<DataPrinter> plugin instead.
     [% Dumper.dump(variable) %]
     [% Dumper.dump_html(variable) %]
 
-Any constructor parameters not recognised by the C<DataPrinter> plugin will
-be silently ignored, so the C<Indent> and C<Pad> parameters above will have no
-effect.
+Any unrecognised constructor parameters are silently ignored, so the C<Indent>
+and C<Pad> parameters above will have no effect.
+
+=head2 Using a custom .dataprinter file
+
+A custom L<Data::Printer|Data::Printer> configuration file can be specified like so:
+
+    [% USE DataPrinter(dp = { rc_file = '/path/to/my/rcfile.conf' }) %]
+
+Beware that setting C<colored = 0> in your F<.dataprinter> file
+I<will not work>. This must be specified in the C<USE DataPrinter> code.
+
+    [% USE DataPrinter(dp = { rc_file = '...', colored = 0 }) %]
+
+=head1 BUGS
+
+Setting C<colored = 0> in the F<.dataprinter> file will not work.
+The C<colored = 0> setting must appear in the C<USE DataPrinter> line.
+
+=head1 SEE ALSO
+
+L<Template::Toolkit|Template::Toolkit>
+L<Data::Printer|Data::Printer>
+L<HTML::FromANSI::Tiny|HTML::FromANSI::Tiny>
 
 =cut
