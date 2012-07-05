@@ -6,6 +6,7 @@ use Template::Plugin::DataPrinter::TestUtils;
 use Test::More;
 require Test::NoWarnings;
 
+use File::Temp      ();
 use HTML::Entities  qw< encode_entities >;
 use Term::ANSIColor qw< color >;
 
@@ -24,6 +25,7 @@ EOT
 my %stash = (
     string => 'a <div> string', # include html tag to make sure it gets escaped
     number => 1234,
+    code   => sub { $_[0] + $_[1] },
 );
 
 {
@@ -58,14 +60,32 @@ my %stash = (
     my $html = process_ok($template, \%stash,
         'dump_html template processed ok');
 
-    match_count_is($html, qr/<style/, 1, 'css is output only once');
-
     my %estash = map { $_ => encode_entities($stash{$_}) } keys %stash;
 
     like($html, qr/test_blue.*$estash{string}/s, 'output contains blue string');
     like($html, qr/test_cyan.*$estash{number}/s, 'output contains cyan number');
     like($html, qr/$estash{string}.*$estash{number}/s,
         'output contains string in number in correct order');
+}
+
+{
+    note 'Testing dump_html css';
+
+    my $template = "[%
+        $template_header
+        DataPrinter.dump_html(string);
+        DataPrinter.dump_html(number);
+    %]";
+
+    my $html = process_ok($template, \%stash,
+        'dump_html template processed ok');
+
+    match_count_is($html, qr/<style/, 1, 'css is output only once');
+
+    my %estash = map { $_ => encode_entities($stash{$_}) } keys %stash;
+
+    like($html, qr/test_blue.*$estash{string}/s, 'output contains blue string');
+    like($html, qr/test_cyan.*$estash{number}/s, 'output contains cyan number');
 }
 
 {
