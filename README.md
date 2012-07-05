@@ -60,14 +60,14 @@ See the [Data::Printer](http://search.cpan.org/perldoc?Data::Printer) documentat
 
 - hfat
 
-A hashref containing the params to be passed to `HTML::FromANSI::Tiny-`new>.
+A hashref containing the params to be passed to `HTML::FromANSI::Tiny->new`.
 
 See the [HTML::FromANSI::Tiny](http://search.cpan.org/perldoc?HTML::FromANSI::Tiny) documentation for more
 information.
 
 ## Disabling colorisation
 
-Colorization is turned on by default. To turn it off, use
+Colorisation is turned on by default. To turn it off, use
 [Data::Printer](http://search.cpan.org/perldoc?Data::Printer)'s `colored` parameter:
 
     [% USE DataPrinter(dp = { colored = 0 }) %]

@@ -118,7 +118,7 @@ See the L<Data::Printer|Data::Printer> documentation for more information.
 
 =item hfat
 
-A hashref containing the params to be passed to C<HTML::FromANSI::Tiny->new>.
+A hashref containing the params to be passed to C<HTML::FromANSI::Tiny-E<gt>new>.
 
 See the L<HTML::FromANSI::Tiny|HTML::FromANSI::Tiny> documentation for more
 information.
@@ -127,7 +127,7 @@ information.
 
 =head2 Disabling colorisation
 
-Colorization is turned on by default. To turn it off, use
+Colorisation is turned on by default. To turn it off, use
 L<Data::Printer|Data::Printer>'s C<colored> parameter:
 
     [% USE DataPrinter(dp = { colored = 0 }) %]
