@@ -41,12 +41,12 @@ my %stash = (
     my $blue  = quotemeta(color('blue'));
     my $cyan  = quotemeta(color('cyan'));
     my $reset = quotemeta(color('reset'));
-    like($ansi, qr/$blue.*"$stash{string}".*$reset/,
+    like($ansi, qr/$blue.*$stash{string}.*$reset/,
         'output contains blue string');
     like($ansi, qr/$cyan.*$stash{number}.*$reset/,
         'output contains cyan number');
     like($ansi, qr/$stash{string}.*$stash{number}/s,
-        'output contains string in number in correct order');
+        'output contains string and number in correct order');
 }
 
 {
