@@ -89,12 +89,11 @@ my %stash = (
 }
 
 {
-    note 'Testing Dumper dropin replacement operation';
+    note 'Testing Dumper dropin replacement operation for dump';
 
     my $template0 = '[%
         USE Dumper;
         Dumper.dump(string, number);
-        Dumper.dump_html(string, number);
     %]';
 
     my $template1 = $template0;
@@ -106,6 +105,39 @@ my %stash = (
 
     templates_match($template0, $template1, \%stash,
         'Dumper alias works', $tt);
+}
+
+
+{
+    note 'Testing Dumper dropin replacement operation for dump_html';
+
+    my $template0 = '[%
+        USE Dumper;
+        Dumper.dump_html(string, number);
+    %]';
+
+    my $template1 = $template0;
+    $template1 =~ s/Dumper/DataPrinter/g;
+
+    my $tt = Template->new(PLUGINS => {
+        Dumper => 'Template::Plugin::DataPrinter'
+    });
+
+    my $out0 = process_ok($template0, \%stash, 'template0', $tt);
+    my $out1 = process_ok($template1, \%stash, 'template1', $tt);
+
+    TODO: {
+        local $TODO = 'Spurious css ordering mismatches in 5.18'
+            if $] >= 5.018;
+
+        is($out0, $out1, 'HTML dumps match exactly');
+    }
+
+    # Strip the css lines and make sure the rest matches
+    $out0 =~ s{<style.*/style>}{}mi;
+    $out1 =~ s{<style.*/style>}{}mi;
+
+    is($out0, $out1, 'HTML dumps without css match exactly');
 }
 
 Test::NoWarnings::had_no_warnings();
