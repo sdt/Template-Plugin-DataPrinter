@@ -4,7 +4,7 @@ Template::Plugin::DataPrinter - Template Toolkit dumper plugin using Data::Print
 
 # VERSION
 
-version 0.011
+version 0.012
 
 # SYNOPSIS
 
@@ -54,16 +54,16 @@ modules can be configured using the `dp` and `hfat` parameters.
 
 - dp
 
-A hashref containing the params to be passed to `Data::Printer::import`.
+    A hashref containing the params to be passed to `Data::Printer::import`.
 
-See the [Data::Printer](http://search.cpan.org/perldoc?Data::Printer) documentation for more information.
+    See the [Data::Printer](http://search.cpan.org/perldoc?Data::Printer) documentation for more information.
 
 - hfat
 
-A hashref containing the params to be passed to `HTML::FromANSI::Tiny->new`.
+    A hashref containing the params to be passed to `HTML::FromANSI::Tiny->new`.
 
-See the [HTML::FromANSI::Tiny](http://search.cpan.org/perldoc?HTML::FromANSI::Tiny) documentation for more
-information.
+    See the [HTML::FromANSI::Tiny](http://search.cpan.org/perldoc?HTML::FromANSI::Tiny) documentation for more
+    information.
 
 ## Disabling colorisation
 
