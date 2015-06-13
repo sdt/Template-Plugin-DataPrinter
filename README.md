@@ -4,7 +4,7 @@ Template::Plugin::DataPrinter - Template Toolkit dumper plugin using Data::Print
 
 # VERSION
 
-version 0.012
+version 0.013
 
 # SYNOPSIS
 
@@ -15,16 +15,16 @@ version 0.012
 
 # DESCRIPTION
 
-This is a dumper plugin for [Template::Toolkit](http://search.cpan.org/perldoc?Template::Toolkit) which uses
-[Data::Printer](http://search.cpan.org/perldoc?Data::Printer) instead of [Data::Dumper](http://search.cpan.org/perldoc?Data::Dumper).
+This is a dumper plugin for [Template::Toolkit](https://metacpan.org/pod/Template::Toolkit) which uses
+[Data::Printer](https://metacpan.org/pod/Data::Printer) instead of [Data::Dumper](https://metacpan.org/pod/Data::Dumper).
 
-[Data::Printer](http://search.cpan.org/perldoc?Data::Printer) is a colorised pretty-printer with nicely
+[Data::Printer](https://metacpan.org/pod/Data::Printer) is a colorised pretty-printer with nicely
 human-readable object output.
 
 # METHODS
 
 The provided methods match those of
-[Template::Plugin::Dumper](http://search.cpan.org/perldoc?Template::Plugin::Dumper).
+[Template::Plugin::Dumper](https://metacpan.org/pod/Template::Plugin::Dumper).
 
 ## dump
 
@@ -38,7 +38,7 @@ Generates an ansi-colorised dump of the data structures passed.
 
 Generates a html-formatted dump of the data structures passed. The ansi
 colorisation is converted to html by
-[HTML::FromANSI::Tiny](http://search.cpan.org/perldoc?HTML::FromANSI::Tiny).
+[HTML::FromANSI::Tiny](https://metacpan.org/pod/HTML::FromANSI::Tiny).
 
     [% USE DataPrinter %]
     [% DataPrinter.dump_html(myvar) %]
@@ -47,7 +47,7 @@ colorisation is converted to html by
 # CONFIGURATION
 
 This plugin has no configuration of its own, but the underlying
-[Data::Printer](http://search.cpan.org/perldoc?Data::Printer) and [HTML::FromANSI::Tiny](http://search.cpan.org/perldoc?HTML::FromANSI::Tiny)
+[Data::Printer](https://metacpan.org/pod/Data::Printer) and [HTML::FromANSI::Tiny](https://metacpan.org/pod/HTML::FromANSI::Tiny)
 modules can be configured using the `dp` and `hfat` parameters.
 
     [% USE DataPrinter(dp = { ... }, hfat = { ... }) %]
@@ -56,19 +56,19 @@ modules can be configured using the `dp` and `hfat` parameters.
 
     A hashref containing the params to be passed to `Data::Printer::import`.
 
-    See the [Data::Printer](http://search.cpan.org/perldoc?Data::Printer) documentation for more information.
+    See the [Data::Printer](https://metacpan.org/pod/Data::Printer) documentation for more information.
 
 - hfat
 
     A hashref containing the params to be passed to `HTML::FromANSI::Tiny->new`.
 
-    See the [HTML::FromANSI::Tiny](http://search.cpan.org/perldoc?HTML::FromANSI::Tiny) documentation for more
+    See the [HTML::FromANSI::Tiny](https://metacpan.org/pod/HTML::FromANSI::Tiny) documentation for more
     information.
 
 ## Disabling colorisation
 
 Colorisation is turned on by default. To turn it off, use
-[Data::Printer](http://search.cpan.org/perldoc?Data::Printer)'s `colored` parameter:
+[Data::Printer](https://metacpan.org/pod/Data::Printer)'s `colored` parameter:
 
     [% USE DataPrinter(dp = { colored = 0 }) %]
 
@@ -97,7 +97,7 @@ and `Pad` parameters above will have no effect.
 
 ## Using a custom .dataprinter file
 
-A custom [Data::Printer](http://search.cpan.org/perldoc?Data::Printer) configuration file can be specified like so:
+A custom [Data::Printer](https://metacpan.org/pod/Data::Printer) configuration file can be specified like so:
 
     [% USE DataPrinter(dp = { rc_file = '/path/to/my/rcfile.conf' }) %]
 
@@ -113,9 +113,9 @@ The `colored = 0` setting must appear in the `USE DataPrinter` line.
 
 # SEE ALSO
 
-- [Template::Toolkit](http://search.cpan.org/perldoc?Template::Toolkit)
-- [Data::Printer](http://search.cpan.org/perldoc?Data::Printer)
-- [HTML::FromANSI::Tiny](http://search.cpan.org/perldoc?HTML::FromANSI::Tiny)
+- [Template::Toolkit](https://metacpan.org/pod/Template::Toolkit)
+- [Data::Printer](https://metacpan.org/pod/Data::Printer)
+- [HTML::FromANSI::Tiny](https://metacpan.org/pod/HTML::FromANSI::Tiny)
 
 # AUTHOR
 
