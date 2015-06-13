@@ -15,6 +15,8 @@ sub new {
     require Data::Printer;
     my $dp_params = merge( {
             colored => 1,
+            return_value => 'dump',
+            use_prototypes => 0,
         },
         $params->{dp});
     Data::Printer->import(%$dp_params);
@@ -36,7 +38,7 @@ sub new {
 
 sub dump {
     my $self = shift;
-    my $text = join('', map { Data::Printer::np($_) . "\n" } @_);
+    my $text = join('', map { p($_) . "\n" } @_);
     return $text;
 }
 
