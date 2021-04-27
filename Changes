@@ -1,6 +1,7 @@
 Revision history for Template-Plugin-DataPrinter
 
 {{$NEXT}}
+ - Updates for DataPrinter 1.0.0
 
 0.013     2015-06-13T15:48:29AEST+1000
  - Fix 'please pass arguments as references' failure
