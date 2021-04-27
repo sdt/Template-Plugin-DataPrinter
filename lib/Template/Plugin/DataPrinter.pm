@@ -13,6 +13,7 @@ sub new {
     my ($class, $context, $params) = @_;
 
     require Data::Printer;
+    Data::Printer->VERSION(1.0.0);
     my $dp_params = merge( {
             colored => 1,
             return_value => 'dump',
