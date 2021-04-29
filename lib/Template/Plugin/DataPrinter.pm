@@ -8,6 +8,7 @@ use base 'Template::Plugin';
 
 use HTML::FromANSI::Tiny ();
 use Hash::Merge::Simple qw< merge >;
+use version 0.77;
 
 sub new {
     my ($class, $context, $params) = @_;
