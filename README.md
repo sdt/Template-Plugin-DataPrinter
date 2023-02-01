@@ -4,7 +4,7 @@ Template::Plugin::DataPrinter - Template Toolkit dumper plugin using Data::Print
 
 # VERSION
 
-version 0.015
+version 0.016
 
 # SYNOPSIS
 
