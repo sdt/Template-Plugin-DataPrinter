@@ -6,7 +6,7 @@ use base 'Template::Plugin';
 # ABSTRACT: Template Toolkit dumper plugin using Data::Printer
 # VERSION
 
-use HTML::FromANSI::Tiny ();
+use HTML::FromANSI::Tiny 0.104 ();
 use Hash::Merge::Simple qw< merge >;
 use version 0.77;
 
